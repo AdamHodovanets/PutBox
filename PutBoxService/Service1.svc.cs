@@ -8,45 +8,27 @@ using System.Text;
 
 namespace PutBoxService
 {
-    public class PBoxService : IPBoxService
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
+    public class Service1 : IPutBoxService
     {
+        public bool Registration(UserInfo user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Login(UserInfo user)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetData(int value)
         {
-            
             return $"You entered: {value}";
         }
 
-        public bool Registration()
+        public UserInfo GetDataUsingDataContract(UserInfo composite)
         {
             throw new NotImplementedException();
-        }
-
-        public bool Login()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void databaseFilePut(string varFilePath)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void databaseFileRead(string varID, string varPathToNewLocation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
         }
     }
 }

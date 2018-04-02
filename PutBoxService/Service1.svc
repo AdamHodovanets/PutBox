@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="PutBoxService.PBoxService" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="PutBoxService.PutBoxService" CodeBehind="Service1.svc.cs" %>
