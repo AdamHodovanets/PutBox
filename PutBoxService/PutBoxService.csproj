@@ -73,16 +73,19 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileData.cs" />
-    <Compile Include="FolderData.cs" />
-    <Compile Include="PutBoxModel.cs" />
+    <Compile Include="Database Tables\FileData.cs" />
+    <Compile Include="Database Tables\FolderData.cs" />
+    <Compile Include="FileManage\FtpClient.cs" />
+    <Compile Include="FileManage\IFileClient.cs" />
+    <Compile Include="PutBoxDbManager.cs" />
+    <Compile Include="Database Tables\PutBoxModel.cs" />
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>
     </Compile>
     <Compile Include="IPutBoxService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sysdiagram.cs" />
-    <Compile Include="UserData.cs" />
+    <Compile Include="Database Tables\sysdiagram.cs" />
+    <Compile Include="Database Tables\UserData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
