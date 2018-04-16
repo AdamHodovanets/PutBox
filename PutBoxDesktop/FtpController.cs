@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
-
-namespace PutBox
+namespace PutBoxDesktop
 {
-    internal class FtpClient : IFileClient
+    class FtpController : IFileController
     {
-        public static string FtpPath = @"ftp://Dermand4433212@putbox.somee.com/www.putbox.somee.com/UserDirectories";
         private readonly string _host;
         private readonly string _user;
         private readonly string _pass;
@@ -16,7 +18,7 @@ namespace PutBox
         private Stream _ftpStream;
         private readonly int _bufferSize = 2048;
 
-        public FtpClient(string hostIp, string userName, string password)
+        public FtpController(string hostIp, string userName, string password)
         {
             _host = hostIp;
             _user = userName;
@@ -27,13 +29,13 @@ namespace PutBox
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + remoteFile);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + remoteFile);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var localFileStream = new FileStream(localFile, FileMode.Create);
                 var byteBuffer = new byte[_bufferSize];
@@ -66,7 +68,7 @@ namespace PutBox
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + remoteFile);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + remoteFile);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
@@ -103,13 +105,13 @@ namespace PutBox
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + deleteFile);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + deleteFile);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
-                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
                 _ftpResponse.Close();
                 _ftpRequest = null;
             }
@@ -123,14 +125,14 @@ namespace PutBox
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + currentFileNameAndPath);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + currentFileNameAndPath);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.Rename;
                 _ftpRequest.RenameTo = newFileName;
-                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
                 _ftpResponse.Close();
                 _ftpRequest = null;
             }
@@ -144,13 +146,13 @@ namespace PutBox
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + newDirectory);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + newDirectory);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
-                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
                 _ftpResponse.Close();
                 _ftpRequest = null;
             }
@@ -164,13 +166,13 @@ namespace PutBox
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + fileName);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + fileName);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.GetDateTimestamp;
-                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var ftpReader = new StreamReader(_ftpStream);
                 string fileInfo = null;
@@ -201,13 +203,13 @@ namespace PutBox
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + fileName);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + fileName);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.GetFileSize;
-                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var ftpReader = new StreamReader(_ftpStream);
                 string fileInfo = null;
@@ -238,13 +240,13 @@ namespace PutBox
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + directory);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + directory);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectory;
-                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var ftpReader = new StreamReader(_ftpStream);
                 string directoryRaw = null;
@@ -276,20 +278,20 @@ namespace PutBox
                 Console.WriteLine(ex.ToString());
             }
 
-            return new[] {""};
+            return new[] { "" };
         }
 
         public string[] DirectoryListDetailed(string directory)
         {
             try
             {
-                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + directory);
+                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + directory);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var ftpReader = new StreamReader(_ftpStream);
                 string directoryRaw = null;
@@ -321,7 +323,7 @@ namespace PutBox
                 Console.WriteLine(ex.ToString());
             }
 
-            return new[] {""};
+            return new[] { "" };
         }
     }
 }

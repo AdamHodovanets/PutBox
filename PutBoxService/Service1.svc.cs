@@ -8,27 +8,36 @@ using System.Text;
 
 namespace PutBoxService
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
-    public class Service1 : IPutBoxService
+    [ServiceContract]
+    public interface IPutBoxService
     {
-        public bool Registration(UserInfo user)
+        [OperationContract]
+        bool Registration(UserInfo user);
+
+        [OperationContract]
+        bool Login(UserInfo user);
+
+        [OperationContract]
+        string GetData(int value);
+
+        [OperationContract]
+        UserInfo GetDataUsingDataContract(UserInfo composite);
+    }
+
+    [DataContract]
+    public class UserInfo
+    {
+        private int _id;
+        private string _email;
+        private string _password;
+        private string path;
+
+        public UserInfo(int id, string email, string password)
         {
-            throw new NotImplementedException();
+            this._id = id;
+            this._email = email;
+            this._password = password;
         }
 
-        public bool Login(UserInfo user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetData(int value)
-        {
-            return $"You entered: {value}";
-        }
-
-        public UserInfo GetDataUsingDataContract(UserInfo composite)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

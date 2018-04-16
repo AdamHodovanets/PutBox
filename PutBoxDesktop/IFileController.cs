@@ -1,6 +1,6 @@
-﻿namespace PutBox
+﻿namespace PutBoxDesktop
 {
-    public interface IFileClient
+    public interface IFileController
     {
         void CreateDirectory(string newDirectory);
         void Delete(string deleteFile);

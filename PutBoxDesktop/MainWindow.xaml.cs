@@ -12,22 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PutBoxDesktop.PutBoxSvc;
 
-namespace PutBox
+namespace PutBoxDesktop
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private RegistrationWindow _registerWindow;
-        private LoginWindow _loginWindow;
-        public MainWindow(LoginWindow loginWindow, RegistrationWindow registerWindow)
+        public MainWindow()
         {
             InitializeComponent();
-            this._loginWindow = loginWindow;
-            this._registerWindow = registerWindow;
-           
+            var client = new PutBoxServiceClient();
+            MessageBox.Show(client.GetData(5)); // Test Service
         }
     }
 }

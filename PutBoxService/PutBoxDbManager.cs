@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PutBox;
 
 namespace PutBoxService
 {
@@ -16,10 +15,10 @@ namespace PutBoxService
     {
         public bool Register(string email, string password)
         {
-            using (var db = new PutBoxModel())
+            using (var db = new PutBoxSqlModel())
             {
                 if (db.UserDatas.Any(x => x.email == email)) return false;
-                 // credentials
+                // credentials
                 db.UserDatas.Add(new UserData()
                 {
                     email = email,
@@ -29,13 +28,13 @@ namespace PutBoxService
                 });
                 db.SaveChanges();
             }
-                return true;
+            return true;
         }
 
         public bool Login(string email, string password)
         {
-            using (var db = new PutBoxModel())
-                return db.UserDatas.Any(x => x.email == email 
+            using (var db = new PutBoxSqlModel())
+                return db.UserDatas.Any(x => x.email == email
                         && x.password == password.GetHashCode().ToString());
         }
 
@@ -43,7 +42,7 @@ namespace PutBoxService
         {
             bool IsIdExists(int id)
             {
-                using (var db = new PutBoxModel())
+                using (var db = new PutBoxSqlModel())
                 {
                     return db.FileDatas.Any(x => x.id == id) ||
                            db.FolderDatas.Any(x => x.id == id) ||
@@ -51,12 +50,12 @@ namespace PutBoxService
                 }
             }
 
-            using (var db = new PutBoxModel())
+            using (var db = new PutBoxSqlModel())
             {
                 var size = db.UserDatas.Count() + db.FileDatas.Count() + db.FolderDatas.Count();
                 while (true)
                 {
-                    var tmpId = new Random().Next(0,size + 1);
+                    var tmpId = new Random().Next(0, size + 1);
                     if (!IsIdExists(tmpId))
                         return tmpId;
                 }

@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PutBox
+namespace PutBoxDesktop
 {
     /// <summary>
     /// Interaction logic for RegistrationWindow.xaml

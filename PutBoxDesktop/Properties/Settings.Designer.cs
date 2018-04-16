@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PutBox.Properties
+namespace PutBoxDesktop.Properties
 {
 
 

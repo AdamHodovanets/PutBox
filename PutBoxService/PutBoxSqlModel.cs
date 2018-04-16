@@ -5,10 +5,10 @@ namespace PutBoxService
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class PutBoxModel : DbContext
+    public partial class PutBoxSqlModel : DbContext
     {
-        public PutBoxModel()
-            : base("name=PutBoxModel")
+        public PutBoxSqlModel()
+            : base("name=PutBoxSqlModel")
         {
         }
 
