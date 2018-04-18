@@ -33,9 +33,10 @@ namespace PutBoxService
 
         public bool Login(string email, string password)
         {
-            using (var db = new PutBoxSqlModel())
-                return db.UserDatas.Any(x => x.email == email
-                        && x.password == password.GetHashCode().ToString());
+            using (var dbl = new PutBoxSqlModel())
+            {
+                return dbl.UserDatas.Any(x => x.email == email);
+            }
         }
 
         private static int GetId()

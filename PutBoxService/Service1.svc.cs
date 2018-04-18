@@ -8,36 +8,30 @@ using System.Text;
 
 namespace PutBoxService
 {
-    [ServiceContract]
-    public interface IPutBoxService
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
+    public class Service1 : IPutBoxService
     {
-        [OperationContract]
-        bool Registration(UserInfo user);
+        public bool Registration(UserInfo user) =>
+        new PutBoxDbManager().Register(user.Email,user.Password);
 
-        [OperationContract]
-        bool Login(UserInfo user);
-
-        [OperationContract]
-        string GetData(int value);
-
-        [OperationContract]
-        UserInfo GetDataUsingDataContract(UserInfo composite);
-    }
-
-    [DataContract]
-    public class UserInfo
-    {
-        private int _id;
-        private string _email;
-        private string _password;
-        private string path;
-
-        public UserInfo(int id, string email, string password)
+        public bool Login(UserInfo user)
         {
-            this._id = id;
-            this._email = email;
-            this._password = password;
+            using (var db = new PutBoxSqlModel())
+            {
+                var tmpPassword = user.Password.GetHashCode().ToString();
+                return db.UserDatas.Any(x => x.email == user.Email && x.password == tmpPassword);
+            }
+        }
+            
+
+        public string GetData(int value)
+        {
+            return $"You entered: {value}";
         }
 
+        public UserInfo GetDataUsingDataContract(UserInfo composite)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

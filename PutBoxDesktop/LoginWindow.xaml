@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="300" Width="300" Background="#FF2F2C31">
     <Grid>
-        <PasswordBox HorizontalAlignment="Left" Margin="76,114,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="76,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <PasswordBox x:Name="passwordInput" HorizontalAlignment="Left" Margin="76,114,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
+        <TextBox x:Name="loginInput" HorizontalAlignment="Left" Height="23" Margin="76,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="107,93,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Width="120" Foreground="White"/>
         <TextBlock HorizontalAlignment="Left" Margin="116,41,0,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" Width="120" Foreground="White"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="76,142,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+        <Button Content="Sign In" HorizontalAlignment="Left" Margin="76,142,0,0" VerticalAlignment="Top" Width="120" Height="22" Click="Button_Click"/>
+        <Label x:Name="loginMessage" Foreground="Crimson"  Content="" HorizontalAlignment="Left" Margin="76,180,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
