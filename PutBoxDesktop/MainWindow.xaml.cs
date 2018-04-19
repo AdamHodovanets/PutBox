@@ -24,7 +24,12 @@ namespace PutBoxDesktop
         public MainWindow()
         {
             InitializeComponent();
-            new RegistrationWindow().ShowDialog();
+            var registrationWnd = new RegistrationWindow();
+            var loginWnd = new LoginWindow();
+            loginWnd.ShowDialog();
+            if (loginWnd.AccessToRegistration)
+                registrationWnd.ShowDialog();
+
         }
     }
 }

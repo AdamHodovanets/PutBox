@@ -13,5 +13,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="116,41,0,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" Width="120" Foreground="White"/>
         <Button Content="Sign In" HorizontalAlignment="Left" Margin="76,142,0,0" VerticalAlignment="Top" Width="120" Height="22" Click="Button_Click"/>
         <Label x:Name="loginMessage" Foreground="Crimson"  Content="" HorizontalAlignment="Left" Margin="76,180,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="signUp" Content="Sign Up!" HorizontalAlignment="Left" Margin="196,234,0,0" VerticalAlignment="Top" Width="75" Background="{x:Null}" Foreground="#FF00B9FF" BorderBrush="{x:Null}" Click="signUp_Click"/>
+        <Label Content="No account?" HorizontalAlignment="Left" Margin="207,213,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" FontSize="8"/>
     </Grid>
 </Window>
