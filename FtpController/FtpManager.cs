@@ -6,9 +6,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PutBoxDesktop
+namespace FtpController
 {
-    class FtpController : IFileController
+    public class FtpManager : IFtpManager
     {
         private readonly string _host;
         private readonly string _user;
@@ -18,7 +18,7 @@ namespace PutBoxDesktop
         private Stream _ftpStream;
         private readonly int _bufferSize = 2048;
 
-        public FtpController(string hostIp, string userName, string password)
+        public FtpManager(string hostIp, string userName, string password)
         {
             _host = hostIp;
             _user = userName;

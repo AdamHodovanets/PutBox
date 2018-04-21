@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PutBoxService", "PutBoxServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PutBoxDesktop", "PutBoxDesktop\PutBoxDesktop.csproj", "{0A830F00-FB5B-4978-B3B1-9777C1646CCC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FtpController", "FtpController\FtpController.csproj", "{4469347B-7E6D-4AEE-ABEA-0BCF21DDD815}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0A830F00-FB5B-4978-B3B1-9777C1646CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A830F00-FB5B-4978-B3B1-9777C1646CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A830F00-FB5B-4978-B3B1-9777C1646CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4469347B-7E6D-4AEE-ABEA-0BCF21DDD815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4469347B-7E6D-4AEE-ABEA-0BCF21DDD815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4469347B-7E6D-4AEE-ABEA-0BCF21DDD815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4469347B-7E6D-4AEE-ABEA-0BCF21DDD815}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

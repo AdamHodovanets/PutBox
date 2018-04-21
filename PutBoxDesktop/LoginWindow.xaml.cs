@@ -20,18 +20,21 @@ namespace PutBoxDesktop
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public bool AccessGranted;
+        public bool AccessGranted { get; private set; }
+        public bool AccessToRegistration { get; private set; }
+        public UserInfo currentUser { get; private set; }
         public LoginWindow()
         {
             InitializeComponent();
             AccessGranted = false;
+            AccessToRegistration = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var client = new PutBoxServiceClient();
-            AccessGranted = client.Registration(
-                new UserInfo() {Email = loginInput.Text, Password = passwordInput.Password});
+            currentUser = new UserInfo() { Email = loginInput.Text, Password = passwordInput.Password };
+            AccessGranted = client.Registration(currentUser);
             if (AccessGranted)
             {
                 loginMessage.Content = "Success";
@@ -43,6 +46,12 @@ namespace PutBoxDesktop
                 loginInput.Text = string.Empty;
                 passwordInput.Password = string.Empty;
             }
+        }
+
+        private void signUp_Click(object sender, RoutedEventArgs e)
+        {
+            AccessToRegistration = true;
+            this.Close();
         }
     }
 }

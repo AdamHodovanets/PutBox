@@ -19,12 +19,13 @@ namespace PutBoxService
             {
                 if (db.UserDatas.Any(x => x.email == email)) return false;
                 // credentials
+                int tmpId = GetId();
                 db.UserDatas.Add(new UserData()
                 {
                     email = email,
                     password = password.GetHashCode().ToString(),
-                    id = GetId(),
-                    path = "TODO"
+                    id = tmpId,
+                    path = "ftp://Dermand4433212@putbox.somee.com/www.putbox.somee.com/UserDirectories/" + tmpId
                 });
                 db.SaveChanges();
             }
