@@ -34,7 +34,8 @@ namespace PutBoxDesktop
         {
             var client = new PutBoxServiceClient();
             currentUser = new UserInfo() { Email = loginInput.Text, Password = passwordInput.Password };
-            AccessGranted = client.Registration(currentUser);
+            var t = Task.Run(() => AccessGranted = client.Registration(currentUser));
+            t.Wait();
             if (AccessGranted)
             {
                 loginMessage.Content = "Success";

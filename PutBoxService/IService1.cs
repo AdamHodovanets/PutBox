@@ -16,12 +16,6 @@ namespace PutBoxService
 
         [OperationContract]
         bool Login(UserInfo user);
-
-        [OperationContract]
-        string GetData(int value);
-
-        [OperationContract]
-        UserInfo GetDataUsingDataContract(UserInfo composite);
     }
 
     [DataContract]

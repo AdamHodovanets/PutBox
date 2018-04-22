@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:PutBoxDesktop"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="PutBoxDesktop.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Icon="pack://siteoforigin:,,,/Resources/pbIcon.ico">
+        Title="MainWindow" Height="450" Width="800">
     <Grid/>
 </Window>
