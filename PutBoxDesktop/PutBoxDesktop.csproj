@@ -121,9 +121,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\PutBoxSvc\PutBoxDesktop.PutBoxSvc.UserInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\PutBoxSvc\Service1.wsdl" />
     <None Include="Connected Services\PutBoxSvc\Service1.xsd">
       <SubType>Designer</SubType>

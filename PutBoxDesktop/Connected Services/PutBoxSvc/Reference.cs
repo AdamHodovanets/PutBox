@@ -116,23 +116,41 @@ namespace PutBoxDesktop.PutBoxSvc {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/Registration", ReplyAction="http://tempuri.org/IPutBoxService/RegistrationResponse")]
         System.Threading.Tasks.Task<bool> RegistrationAsync(PutBoxDesktop.PutBoxSvc.UserInfo user);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetUserDir", ReplyAction="http://tempuri.org/IPutBoxService/GetUserDirResponse")]
+        string GetUserDir();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetUserDir", ReplyAction="http://tempuri.org/IPutBoxService/GetUserDirResponse")]
+        System.Threading.Tasks.Task<string> GetUserDirAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/Login", ReplyAction="http://tempuri.org/IPutBoxService/LoginResponse")]
         bool Login(PutBoxDesktop.PutBoxSvc.UserInfo user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/Login", ReplyAction="http://tempuri.org/IPutBoxService/LoginResponse")]
         System.Threading.Tasks.Task<bool> LoginAsync(PutBoxDesktop.PutBoxSvc.UserInfo user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetData", ReplyAction="http://tempuri.org/IPutBoxService/GetDataResponse")]
-        string GetData(int value);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetPath", ReplyAction="http://tempuri.org/IPutBoxService/GetPathResponse")]
+        string GetPath(PutBoxDesktop.PutBoxSvc.UserInfo user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetData", ReplyAction="http://tempuri.org/IPutBoxService/GetDataResponse")]
-        System.Threading.Tasks.Task<string> GetDataAsync(int value);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetPath", ReplyAction="http://tempuri.org/IPutBoxService/GetPathResponse")]
+        System.Threading.Tasks.Task<string> GetPathAsync(PutBoxDesktop.PutBoxSvc.UserInfo user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IPutBoxService/GetDataUsingDataContractResponse")]
-        PutBoxDesktop.PutBoxSvc.UserInfo GetDataUsingDataContract(PutBoxDesktop.PutBoxSvc.UserInfo composite);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetFtpHost", ReplyAction="http://tempuri.org/IPutBoxService/GetFtpHostResponse")]
+        string GetFtpHost();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IPutBoxService/GetDataUsingDataContractResponse")]
-        System.Threading.Tasks.Task<PutBoxDesktop.PutBoxSvc.UserInfo> GetDataUsingDataContractAsync(PutBoxDesktop.PutBoxSvc.UserInfo composite);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetFtpHost", ReplyAction="http://tempuri.org/IPutBoxService/GetFtpHostResponse")]
+        System.Threading.Tasks.Task<string> GetFtpHostAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetFtpUser", ReplyAction="http://tempuri.org/IPutBoxService/GetFtpUserResponse")]
+        string GetFtpUser();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetFtpUser", ReplyAction="http://tempuri.org/IPutBoxService/GetFtpUserResponse")]
+        System.Threading.Tasks.Task<string> GetFtpUserAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetFtpPassword", ReplyAction="http://tempuri.org/IPutBoxService/GetFtpPasswordResponse")]
+        string GetFtpPassword();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPutBoxService/GetFtpPassword", ReplyAction="http://tempuri.org/IPutBoxService/GetFtpPasswordResponse")]
+        System.Threading.Tasks.Task<string> GetFtpPasswordAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -170,6 +188,14 @@ namespace PutBoxDesktop.PutBoxSvc {
             return base.Channel.RegistrationAsync(user);
         }
         
+        public string GetUserDir() {
+            return base.Channel.GetUserDir();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetUserDirAsync() {
+            return base.Channel.GetUserDirAsync();
+        }
+        
         public bool Login(PutBoxDesktop.PutBoxSvc.UserInfo user) {
             return base.Channel.Login(user);
         }
@@ -178,20 +204,36 @@ namespace PutBoxDesktop.PutBoxSvc {
             return base.Channel.LoginAsync(user);
         }
         
-        public string GetData(int value) {
-            return base.Channel.GetData(value);
+        public string GetPath(PutBoxDesktop.PutBoxSvc.UserInfo user) {
+            return base.Channel.GetPath(user);
         }
         
-        public System.Threading.Tasks.Task<string> GetDataAsync(int value) {
-            return base.Channel.GetDataAsync(value);
+        public System.Threading.Tasks.Task<string> GetPathAsync(PutBoxDesktop.PutBoxSvc.UserInfo user) {
+            return base.Channel.GetPathAsync(user);
         }
         
-        public PutBoxDesktop.PutBoxSvc.UserInfo GetDataUsingDataContract(PutBoxDesktop.PutBoxSvc.UserInfo composite) {
-            return base.Channel.GetDataUsingDataContract(composite);
+        public string GetFtpHost() {
+            return base.Channel.GetFtpHost();
         }
         
-        public System.Threading.Tasks.Task<PutBoxDesktop.PutBoxSvc.UserInfo> GetDataUsingDataContractAsync(PutBoxDesktop.PutBoxSvc.UserInfo composite) {
-            return base.Channel.GetDataUsingDataContractAsync(composite);
+        public System.Threading.Tasks.Task<string> GetFtpHostAsync() {
+            return base.Channel.GetFtpHostAsync();
+        }
+        
+        public string GetFtpUser() {
+            return base.Channel.GetFtpUser();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetFtpUserAsync() {
+            return base.Channel.GetFtpUserAsync();
+        }
+        
+        public string GetFtpPassword() {
+            return base.Channel.GetFtpPassword();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetFtpPasswordAsync() {
+            return base.Channel.GetFtpPasswordAsync();
         }
     }
 }

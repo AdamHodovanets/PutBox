@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using FluentFTP;
 
 namespace FtpController
 {
@@ -25,17 +22,40 @@ namespace FtpController
             _pass = password;
         }
 
+        public void DeleteFtpDirectoryAndContent(string path)
+        {
+            path = $@"www.putbox.somee.com/{path}";
+            using (var conn = new FtpClient())
+            {
+                conn.Host = @"ftp://putbox.somee.com";
+                conn.Credentials = new NetworkCredential(_user, _pass);
+
+                foreach (var item in conn.GetListing(path, FtpListOption.AllFiles | FtpListOption.ForceList)
+                )
+                    switch (item.Type)
+                    {
+                        case FtpFileSystemObjectType.Directory:
+                            conn.DeleteDirectory(item.FullName, FtpListOption.AllFiles | FtpListOption.ForceList);
+                            break;
+                        case FtpFileSystemObjectType.File:
+                            conn.DeleteFile(item.FullName);
+                            break;
+                    }
+            }
+        }
+
+
         public void Download(string remoteFile, string localFile)
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + remoteFile);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + remoteFile);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var localFileStream = new FileStream(localFile, FileMode.Create);
                 var byteBuffer = new byte[_bufferSize];
@@ -68,7 +88,7 @@ namespace FtpController
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + remoteFile);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + remoteFile);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
@@ -105,13 +125,13 @@ namespace FtpController
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + deleteFile);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + deleteFile);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
-                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
                 _ftpResponse.Close();
                 _ftpRequest = null;
             }
@@ -125,14 +145,14 @@ namespace FtpController
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + currentFileNameAndPath);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + currentFileNameAndPath);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.Rename;
                 _ftpRequest.RenameTo = newFileName;
-                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
                 _ftpResponse.Close();
                 _ftpRequest = null;
             }
@@ -146,13 +166,13 @@ namespace FtpController
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + newDirectory);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + newDirectory);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
-                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
                 _ftpResponse.Close();
                 _ftpRequest = null;
             }
@@ -166,13 +186,13 @@ namespace FtpController
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + fileName);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + fileName);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.GetDateTimestamp;
-                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var ftpReader = new StreamReader(_ftpStream);
                 string fileInfo = null;
@@ -203,13 +223,13 @@ namespace FtpController
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + fileName);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + fileName);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.GetFileSize;
-                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var ftpReader = new StreamReader(_ftpStream);
                 string fileInfo = null;
@@ -240,13 +260,13 @@ namespace FtpController
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + directory);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + directory);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectory;
-                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var ftpReader = new StreamReader(_ftpStream);
                 string directoryRaw = null;
@@ -285,13 +305,13 @@ namespace FtpController
         {
             try
             {
-                _ftpRequest = (FtpWebRequest)WebRequest.Create(_host + "/" + directory);
+                _ftpRequest = (FtpWebRequest) WebRequest.Create(_host + "/" + directory);
                 _ftpRequest.Credentials = new NetworkCredential(_user, _pass);
                 _ftpRequest.UseBinary = true;
                 _ftpRequest.UsePassive = true;
                 _ftpRequest.KeepAlive = true;
                 _ftpRequest.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-                _ftpResponse = (FtpWebResponse)_ftpRequest.GetResponse();
+                _ftpResponse = (FtpWebResponse) _ftpRequest.GetResponse();
                 _ftpStream = _ftpResponse.GetResponseStream();
                 var ftpReader = new StreamReader(_ftpStream);
                 string directoryRaw = null;

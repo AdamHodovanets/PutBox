@@ -1,51 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Drawing;
 using System.IO;
-using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using FtpController;
-using Hardcodet.Wpf.TaskbarNotification;
+using PutBoxDesktop.Properties;
 using PutBoxDesktop.PutBoxSvc;
-using Syncfusion.UI.Xaml.Gauges;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace PutBoxDesktop
 {
     public partial class MainWindow : Window
     {
-        private UserInfo currentUser;
+        private readonly UserInfo currentUser;
         private FileSystemWatcher watcher;
         private FtpManager ftpManager;
+        private readonly PutBoxServiceClient client;
+        private string relatiavePath;
+
         public MainWindow()
         {
             InitializeComponent();
-            var tbi = new TaskbarIcon
-            {
-                Icon = Properties.Resources.pbIcon,
-                ToolTipText = "hello world"
-            };
+            Hide();
+            client = new PutBoxServiceClient();
+            taskBar.Icon = Properties.Resources.pbIcon;
             var bitmap = Properties.Resources.pbIcon.ToBitmap();
             var hBitmap = bitmap.GetHbitmap();
-            ImageSource wpfBitmap =
-                Imaging.CreateBitmapSourceFromHBitmap(
-                    hBitmap, IntPtr.Zero, Int32Rect.Empty,
-                    BitmapSizeOptions.FromEmptyOptions());
-            this.Icon = wpfBitmap;
+            ImageSource wpfBitmap = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+            Icon = wpfBitmap;
             var registrationWnd = new RegistrationWindow();
             var loginWnd = new LoginWindow();
             loginWnd.ShowDialog();
@@ -55,61 +40,76 @@ namespace PutBoxDesktop
                 if (registrationWnd.Registered)
                 {
                     currentUser = registrationWnd.currentUser;
-                    currentUser.Path = Properties.Settings.Default.PutBoxDirectory;
+                    currentUser.Path = Settings.Default.PutBoxDirectory;
                 }
             }
             else if (loginWnd.AccessGranted)
             {
                 currentUser = loginWnd.currentUser;
-                currentUser.Path = Properties.Settings.Default.PutBoxDirectory;
+                currentUser.Path = Settings.Default.PutBoxDirectory;
             }
             else
-                this.Close();
+            {
+                Close();
+            }
 
             Watch();
-
-
         }
-        
 
         private void Watch()
         {
-            if (!Directory.Exists(currentUser.Path))
-                Directory.CreateDirectory(currentUser.Path);
+            if (!Directory.Exists(currentUser.Path)) Directory.CreateDirectory(currentUser.Path);
+            relatiavePath = client.GetUserDir();
+            ftpManager = new FtpManager(client.GetFtpHost(), client.GetFtpUser(), client.GetFtpPassword());
+            ftpManager.CreateDirectory($@"UserDirectories{client.GetPath(currentUser)}");
             watcher = new FileSystemWatcher
             {
                 IncludeSubdirectories = true,
                 Path = currentUser.Path,
-                NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
-                                                        | NotifyFilters.FileName | NotifyFilters.DirectoryName,
+                NotifyFilter =
+                    NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName
+                    | NotifyFilters.DirectoryName,
                 Filter = "*.*",
                 EnableRaisingEvents = true
             };
-            watcher.Changed += OnChanged;
             watcher.Renamed += OnRenamed;
             watcher.Created += OnCreated;
             watcher.Deleted += OnDeleted;
         }
 
-        private void OnChanged(object source, FileSystemEventArgs e)
+        private void RecursiveDirectory(string dirPath, string uploadPath)
         {
-            MessageBox.Show($"OnChanged{e.FullPath}");
+            var files = Directory.GetFiles(dirPath, "*.*");
+            var subDirs = Directory.GetDirectories(dirPath);
+            foreach (var file in files) ftpManager.Upload(uploadPath + "/" + Path.GetFileName(file), file);
+            foreach (var subDir in subDirs)
+            {
+                ftpManager.CreateDirectory(uploadPath + "/" + Path.GetFileName(subDir));
+                RecursiveDirectory(subDir, uploadPath + "/" + Path.GetFileName(subDir));
+            }
         }
 
         private void OnRenamed(object source, FileSystemEventArgs e)
         {
-            MessageBox.Show($"OnRenamed{e.FullPath}");
+            ftpManager.DeleteFtpDirectoryAndContent($@"UserDirectories{client.GetPath(currentUser)}");
+            RecursiveDirectory($@"{currentUser.Path}", $@"UserDirectories{client.GetPath(currentUser)}");
         }
 
         private void OnCreated(object source, FileSystemEventArgs e)
         {
-            MessageBox.Show($"OnCreated{e.FullPath}");
+            ftpManager.DeleteFtpDirectoryAndContent($@"UserDirectories{client.GetPath(currentUser)}");
+            RecursiveDirectory($@"{currentUser.Path}", $@"UserDirectories{client.GetPath(currentUser)}");
         }
 
         private void OnDeleted(object source, FileSystemEventArgs e)
         {
-            MessageBox.Show($"OnDeleted{e.FullPath}");
+            ftpManager.DeleteFtpDirectoryAndContent($@"UserDirectories{client.GetPath(currentUser)}");
+            RecursiveDirectory($@"{currentUser.Path}", $@"UserDirectories{client.GetPath(currentUser)}");
         }
 
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show((sender as MenuItem)?.Header.ToString());
+        }
     }
 }

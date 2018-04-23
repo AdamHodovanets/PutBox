@@ -12,8 +12,9 @@ namespace PutBoxService
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class Service1 : IPutBoxService
     {
+        private PutBoxDbManager pbManager = new PutBoxDbManager();
         public bool Registration(UserInfo user) =>
-        new PutBoxDbManager().Register(user.Email,user.Password);
+            pbManager.Register(user.Email,user.Password);
 
         public bool Login(UserInfo user)
         {
@@ -21,12 +22,23 @@ namespace PutBoxService
             {
                 var tmpPassword = user.Password.GetHashCode().ToString();
                 return db.UserDatas.Any(x => x.email == user.Email 
-                                             && x.password == tmpPassword.GetHashCode().ToString());
+                                             && x.password == tmpPassword);
             }
         }
 
-        public string GetFtpHost() => File.ReadLines("FtpInfo.txt").ElementAt(0);
-        public string GetFtpUser() => File.ReadLines("FtpInfo.txt").ElementAt(1);
-        public string GetFtpPassword => File.ReadLines("FtpInfo.txt").ElementAt(2);
+        public string GetFtpHost() => pbManager.FtpHost;
+        public string GetUserDir() => pbManager.UserDir;
+        public string GetFtpUser() => pbManager.FtpUser;
+        public string GetFtpPassword() => pbManager.FtpPassword;
+
+        public string GetPath(UserInfo user)
+        {
+            using (var db = new PutBoxSqlModel())
+            {
+                var tmpPassword = user.Password.GetHashCode().ToString();
+                return db.UserDatas.First(x => x.email == user.Email
+                                             && x.password == tmpPassword).path;
+            }
+        }
     }
 }

@@ -15,7 +15,21 @@ namespace PutBoxService
         bool Registration(UserInfo user);
 
         [OperationContract]
+        string GetUserDir();
+
+        [OperationContract]
         bool Login(UserInfo user);
+
+        [OperationContract]
+        string GetPath(UserInfo user);
+        [OperationContract]
+        string GetFtpHost();
+
+        [OperationContract]
+        string GetFtpUser();
+
+        [OperationContract]
+        string GetFtpPassword();
     }
 
     [DataContract]

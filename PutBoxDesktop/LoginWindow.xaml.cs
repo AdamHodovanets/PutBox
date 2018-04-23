@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -28,14 +29,21 @@ namespace PutBoxDesktop
             InitializeComponent();
             AccessGranted = false;
             AccessToRegistration = false;
+
+            var bitmap = Properties.Resources.pbIcon.ToBitmap();
+            var hBitmap = bitmap.GetHbitmap();
+            ImageSource wpfBitmap =
+                Imaging.CreateBitmapSourceFromHBitmap(
+                    hBitmap, IntPtr.Zero, Int32Rect.Empty,
+                    BitmapSizeOptions.FromEmptyOptions());
+            this.Icon = wpfBitmap;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var client = new PutBoxServiceClient();
             currentUser = new UserInfo() { Email = loginInput.Text, Password = passwordInput.Password };
-            var t = Task.Run(() => AccessGranted = client.Registration(currentUser));
-            t.Wait();
+            AccessGranted = client.Login(currentUser);
             if (AccessGranted)
             {
                 loginMessage.Content = "Success";

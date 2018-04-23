@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="RegistrationWindow" Height="300" Width="300" Background="#FF2F2C31">
     <Grid>
-        <PasswordBox x:Name="passwordInput" HorizontalAlignment="Left" Margin="76,92,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
-        <TextBox x:Name="loginInput" HorizontalAlignment="Left" Height="23" Margin="76,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <PasswordBox x:Name="passwordRepeatInput" HorizontalAlignment="Left" Margin="76,120,0,0" VerticalAlignment="Top" Height="23" Width="120" PasswordChanged="passwordRepeatInput_PasswordChanged"/>
-        <TextBlock HorizontalAlignment="Left" Margin="107,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" Foreground="White"><Run Text="Password"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="116,19,0,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" Width="120" Foreground="White"/>
-        <Button x:Name="signUpBtn" Content="Sign Up" HorizontalAlignment="Left" Margin="76,201,0,0" VerticalAlignment="Top" Width="120" Height="22" Click="Button_Click" IsEnabled="False"/>
+        <PasswordBox x:Name="passwordInput" HorizontalAlignment="Left" Margin="76,92,0,0" VerticalAlignment="Top" Width="131" Height="23"/>
+        <TextBox x:Name="loginInput" HorizontalAlignment="Left" Height="23" Margin="76,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" TextChanged="loginInput_TextChanged"/>
+        <PasswordBox x:Name="passwordRepeatInput" HorizontalAlignment="Left" Margin="76,120,0,0" VerticalAlignment="Top" Height="23" Width="131" PasswordChanged="passwordRepeatInput_PasswordChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="110,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="71" Foreground="White"><Run Text="Password"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="120,19,0,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" Width="131" Foreground="White"/>
+        <Button x:Name="signUpBtn" Content="Sign Up" HorizontalAlignment="Left" Margin="76,210,0,0" VerticalAlignment="Top" Width="131" Height="29" Click="Button_Click" IsEnabled="False"/>
         <Label Foreground="Crimson" x:Name="registrationMessage" Content="" HorizontalAlignment="Left" Margin="76,232,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Select" HorizontalAlignment="Left" Margin="153,157,0,0" VerticalAlignment="Top" Width="43" Height="32" Click="Button_Click_1"/>
-        <TextBlock HorizontalAlignment="Left" Margin="76,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" Foreground="White" Text="Select PutBox Directory"/>
+        <Button x:Name="selectBtn" Content="Select" HorizontalAlignment="Left" Margin="155,157,0,0" VerticalAlignment="Top" Width="52" Height="32" Click="Button_Click_1"/>
+        <TextBlock x:Name="dirNameBlock" HorizontalAlignment="Left" Margin="76,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Foreground="White" Text="Select PutBox Directory"/>
     </Grid>
 </Window>

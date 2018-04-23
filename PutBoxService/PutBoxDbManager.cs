@@ -1,43 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
 namespace PutBoxService
 {
-    internal interface IPutBoxDbManager
+    public class PutBoxDbManager
     {
-        bool Register(string email, string password);
-        bool Login(string email, string password);
+        public string FtpHost { get; }
+        public string UserDir { get; }
+        public string FtpUser { get; }
+        public string FtpPassword { get; }
 
-    }
-    public class PutBoxDbManager : IPutBoxDbManager
-    {
+        public PutBoxDbManager()
+        {
+            FtpHost = @"ftp://Dermand4433212@putbox.somee.com/www.putbox.somee.com/";
+            UserDir = @"ftp://Dermand4433212@putbox.somee.com/www.putbox.somee.com/UserDirectories";
+            FtpUser = @"Dermand4433212";
+            FtpPassword = @"223d6vWn";
+        }
+
         public bool Register(string email, string password)
         {
             using (var db = new PutBoxSqlModel())
             {
                 if (db.UserDatas.Any(x => x.email == email)) return false;
-                // credentials
-                int tmpId = GetId();
+                var tmpId = GetId();
                 db.UserDatas.Add(new UserData()
                 {
                     email = email,
                     password = password.GetHashCode().ToString(),
                     id = tmpId,
-                    path = "ftp://Dermand4433212@putbox.somee.com/www.putbox.somee.com/UserDirectories/" + tmpId
+                    path = $@"/{tmpId}"
                 });
                 db.SaveChanges();
             }
             return true;
-        }
-
-        public bool Login(string email, string password)
-        {
-            using (var dbl = new PutBoxSqlModel())
-            {
-                return dbl.UserDatas.Any(x => x.email == email);
-            }
         }
 
         private static int GetId()

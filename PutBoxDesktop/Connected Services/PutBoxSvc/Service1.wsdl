@@ -13,46 +13,85 @@
   <wsdl:message name="IPutBoxService_Registration_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegistrationResponse" />
   </wsdl:message>
+  <wsdl:message name="IPutBoxService_GetUserDir_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDir" />
+  </wsdl:message>
+  <wsdl:message name="IPutBoxService_GetUserDir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDirResponse" />
+  </wsdl:message>
   <wsdl:message name="IPutBoxService_Login_InputMessage">
     <wsdl:part name="parameters" element="tns:Login" />
   </wsdl:message>
   <wsdl:message name="IPutBoxService_Login_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
-  <wsdl:message name="IPutBoxService_GetData_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetData" />
+  <wsdl:message name="IPutBoxService_GetPath_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPath" />
   </wsdl:message>
-  <wsdl:message name="IPutBoxService_GetData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  <wsdl:message name="IPutBoxService_GetPath_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPathResponse" />
   </wsdl:message>
-  <wsdl:message name="IPutBoxService_GetDataUsingDataContract_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
+  <wsdl:message name="IPutBoxService_GetFtpHost_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFtpHost" />
   </wsdl:message>
-  <wsdl:message name="IPutBoxService_GetDataUsingDataContract_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
+  <wsdl:message name="IPutBoxService_GetFtpHost_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFtpHostResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPutBoxService_GetFtpUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFtpUser" />
+  </wsdl:message>
+  <wsdl:message name="IPutBoxService_GetFtpUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFtpUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPutBoxService_GetFtpPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFtpPassword" />
+  </wsdl:message>
+  <wsdl:message name="IPutBoxService_GetFtpPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFtpPasswordResponse" />
   </wsdl:message>
   <wsdl:portType name="IPutBoxService">
     <wsdl:operation name="Registration">
       <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/Registration" message="tns:IPutBoxService_Registration_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/RegistrationResponse" message="tns:IPutBoxService_Registration_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetUserDir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/GetUserDir" message="tns:IPutBoxService_GetUserDir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/GetUserDirResponse" message="tns:IPutBoxService_GetUserDir_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/Login" message="tns:IPutBoxService_Login_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/LoginResponse" message="tns:IPutBoxService_Login_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/GetData" message="tns:IPutBoxService_GetData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/GetDataResponse" message="tns:IPutBoxService_GetData_OutputMessage" />
+    <wsdl:operation name="GetPath">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/GetPath" message="tns:IPutBoxService_GetPath_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/GetPathResponse" message="tns:IPutBoxService_GetPath_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetDataUsingDataContract">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/GetDataUsingDataContract" message="tns:IPutBoxService_GetDataUsingDataContract_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/GetDataUsingDataContractResponse" message="tns:IPutBoxService_GetDataUsingDataContract_OutputMessage" />
+    <wsdl:operation name="GetFtpHost">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/GetFtpHost" message="tns:IPutBoxService_GetFtpHost_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/GetFtpHostResponse" message="tns:IPutBoxService_GetFtpHost_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFtpUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/GetFtpUser" message="tns:IPutBoxService_GetFtpUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/GetFtpUserResponse" message="tns:IPutBoxService_GetFtpUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFtpPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPutBoxService/GetFtpPassword" message="tns:IPutBoxService_GetFtpPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPutBoxService/GetFtpPasswordResponse" message="tns:IPutBoxService_GetFtpPassword_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPutBoxService" type="tns:IPutBoxService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="Registration">
       <soap:operation soapAction="http://tempuri.org/IPutBoxService/Registration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDir">
+      <soap:operation soapAction="http://tempuri.org/IPutBoxService/GetUserDir" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -69,8 +108,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetData">
-      <soap:operation soapAction="http://tempuri.org/IPutBoxService/GetData" style="document" />
+    <wsdl:operation name="GetPath">
+      <soap:operation soapAction="http://tempuri.org/IPutBoxService/GetPath" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -78,8 +117,26 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetDataUsingDataContract">
-      <soap:operation soapAction="http://tempuri.org/IPutBoxService/GetDataUsingDataContract" style="document" />
+    <wsdl:operation name="GetFtpHost">
+      <soap:operation soapAction="http://tempuri.org/IPutBoxService/GetFtpHost" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFtpUser">
+      <soap:operation soapAction="http://tempuri.org/IPutBoxService/GetFtpUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFtpPassword">
+      <soap:operation soapAction="http://tempuri.org/IPutBoxService/GetFtpPassword" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

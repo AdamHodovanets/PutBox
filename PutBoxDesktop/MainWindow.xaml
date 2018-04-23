@@ -4,8 +4,49 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PutBoxDesktop"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="PutBoxDesktop.MainWindow"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        x:Class="PutBoxDesktop.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid/>
+    <Grid>
+        <tb:TaskbarIcon ToolTipText="PutBox" x:Name="taskBar">
+            <tb:TaskbarIcon.TrayToolTip>
+                <Border
+
+                    Background="#FF2F2C31"
+
+                    BorderBrush="Orange"
+
+                    BorderThickness="2"
+
+                    CornerRadius="4"
+
+                    Opacity="0.8"
+
+                    Width="160"
+
+                    Height="40">
+                    <TextBlock
+
+                        Text="PutBox"
+
+                        HorizontalAlignment="Center"
+
+                        VerticalAlignment="Center"
+
+                    />
+                </Border>
+            </tb:TaskbarIcon.TrayToolTip>
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu
+
+                    Background="#FF2F2C31" Foreground="White">
+                    <MenuItem Background="#FF2F2C31" Header="Synchronization" Click="MenuItem_OnClick"/>
+                    <MenuItem Background="#FF2F2C31" Header="Options" Click="MenuItem_OnClick"/>
+                    <MenuItem Background="#FF2F2C31" Header="Sign Out" Click="MenuItem_OnClick"/>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+    </Grid>
 </Window>
