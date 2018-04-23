@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FtpController;
 using PutBoxDesktop.Properties;
 using PutBoxDesktop.PutBoxSvc;
+using MenuItem = System.Windows.Controls.MenuItem;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace PutBoxDesktop
@@ -62,6 +63,8 @@ namespace PutBoxDesktop
             relatiavePath = client.GetUserDir();
             ftpManager = new FtpManager(client.GetFtpHost(), client.GetFtpUser(), client.GetFtpPassword());
             ftpManager.CreateDirectory($@"UserDirectories{client.GetPath(currentUser)}");
+            var url = "UserDirectories/28";
+            ftpManager.DownloadFtpDirectory(url, Properties.Settings.Default.PutBoxDirectory);
             watcher = new FileSystemWatcher
             {
                 IncludeSubdirectories = true,
@@ -109,7 +112,25 @@ namespace PutBoxDesktop
 
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show((sender as MenuItem)?.Header.ToString());
+            switch((sender as MenuItem).Header.ToString())
+            {
+                case "Synchronization":
+                    var url = $@"UserDirectories{client.GetPath(currentUser)}";
+                    ftpManager.DownloadFtpDirectory(url, Properties.Settings.Default.PutBoxDirectory);
+                    break;
+                case "Options":
+                    var fbd = new FolderBrowserDialog();
+                    if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        fbd.Description = @"Choose empty folder or create new";
+                        Properties.Settings.Default.PutBoxDirectory = fbd.SelectedPath;
+                        Properties.Settings.Default.Save();
+                    }
+                    break;
+                case "Sign Out":
+                    this.Close();
+                    break;
+            }
         }
     }
 }

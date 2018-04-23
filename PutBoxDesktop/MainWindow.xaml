@@ -13,7 +13,6 @@
         <tb:TaskbarIcon ToolTipText="PutBox" x:Name="taskBar">
             <tb:TaskbarIcon.TrayToolTip>
                 <Border
-
                     Background="#FF2F2C31"
 
                     BorderBrush="Orange"

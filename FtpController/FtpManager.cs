@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using FluentFTP;
 
 namespace FtpController
@@ -21,6 +23,28 @@ namespace FtpController
             _user = userName;
             _pass = password;
         }
+        public void DownloadFtpDirectory(string path, string localPath)
+        {
+            path = $@"www.putbox.somee.com/{path}";
+            using (var conn = new FtpClient())
+            {
+                conn.Host = @"ftp://putbox.somee.com";
+                conn.Credentials = new NetworkCredential(_user, _pass);
+                foreach (var item in conn.GetListing(path, FtpListOption.AllFiles | FtpListOption.ForceList)
+                )
+
+                    switch (item.Type)
+                    {
+                        case FtpFileSystemObjectType.Directory:
+                            conn.DownloadFile(localPath, item.FullName);
+                            break;
+                        case FtpFileSystemObjectType.File:
+                            conn.DownloadFile(localPath, item.FullName);
+                            break;
+                    }
+            }
+        }
+
 
         public void DeleteFtpDirectoryAndContent(string path)
         {
@@ -29,9 +53,9 @@ namespace FtpController
             {
                 conn.Host = @"ftp://putbox.somee.com";
                 conn.Credentials = new NetworkCredential(_user, _pass);
-
                 foreach (var item in conn.GetListing(path, FtpListOption.AllFiles | FtpListOption.ForceList)
                 )
+                    
                     switch (item.Type)
                     {
                         case FtpFileSystemObjectType.Directory:
